@@ -17,9 +17,9 @@ import { useFormStore } from "@/lib/store";
 import { useToast } from "@/hooks/use-toast";
 
 const formSchema = z.object({
-  street: z.string().min(5, "Street address must be at least 5 characters"),
-  city: z.string().min(2, "City must be at least 2 characters"),
-  state: z.string().min(2, "State must be at least 2 characters"),
+  street: z.string().min(5, ),
+  city: z.string().min(2, ),
+  state: z.string().min(2,),
   zipCode: z.string().regex(/^\d{5}(-\d{4})?$/, "Invalid ZIP code"),
 });
 
