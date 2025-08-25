@@ -1,0 +1,62 @@
+pipeline {
+    agent any
+
+    environment {
+        NODE_VERSION = "18" // ✅ Set Node.js version
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/your-username/multi-step-form-nextjs.git'
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                sh 'curl -fsSL https://deb.nodesource.com/setup_$NODE_VERSION.x | sudo -E bash -'
+                sh 'sudo apt-get install -y nodejs'
+                sh 'npm install'
+            }
+        }
+
+        stage('Lint') {
+            steps {
+                sh 'npm run lint || true' // Won't fail build if lint has warnings
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh 'npm run build'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh 'npm test'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo '🚀 Deploying Next.js app...'
+                // Example for Vercel CLI
+                // sh 'npx vercel --prod --token=$VERCEL_TOKEN'
+                
+                // Example for Docker build & push
+                // sh 'docker build -t your-dockerhub-username/multi-step-form-nextjs:latest .'
+                // sh 'docker push your-dockerhub-username/multi-step-form-nextjs:latest'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo '✅ Build & Deploy successful!'
+        }
+        failure {
+            echo '❌ Build failed. Check logs.'
+        }
+    }
+}
