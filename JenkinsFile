@@ -5,12 +5,11 @@ pipeline {
         NODE_VERSION = "18" // ✅ Set Node.js version
     }
 
-    stages {
-        stage('Checkout') {
-            steps {
-                git branch: 'main', url: 'https://github.com/your-username/multi-step-form-nextjs.git'
-            }
-        }
+   stage('Checkout') {
+    steps {
+        git branch: 'main', url: 'https://github.com/harsh7509/Multi-Step-Form-nextjs'
+    }
+}
 
         stage('Install Dependencies') {
             steps {
